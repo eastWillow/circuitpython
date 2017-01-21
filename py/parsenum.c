@@ -136,6 +136,9 @@ overflow:
     // reparse using long int
     {
         const char *s2 = (const char*)str_val_start;
+        mp_obj_t exc = mp_obj_new_exception_msg_varg(&mp_type_ValueError,
+            "int too long: %s", str_val_start);
+        raise_exc(exc, lex);
         ret_val = mp_obj_new_int_from_str_len(&s2, top - str_val_start, neg, base);
         str = (const byte*)s2;
         goto have_ret_val;
